@@ -1,0 +1,70 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+
+<div style="display: flex; flex-direction: column; height: 100%;">
+    <div class="header">
+        Side by side web    
+    </div>
+    <div style="display: flex; flex-wrap: wrap; height: 100%;">
+        @if (!string.IsNullOrEmpty(Page1))
+        {
+            <iframe style="@GetIframeStyle(1)" src="@Page1" />
+        }
+        @if (!string.IsNullOrEmpty(Page2))
+        {
+            <iframe style="@GetIframeStyle(2)" src="@Page2" />
+        }
+        @if (!string.IsNullOrEmpty(Page3))
+        {
+            <iframe style="@GetIframeStyle(3)" src="@Page3" />
+        }
+        @if (!string.IsNullOrEmpty(Page4))
+        {
+            <iframe style="@GetIframeStyle(4)" src="@Page4" />
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Page1 { get; set; } = "";
+    [Parameter]
+    [SupplyParameterFromQuery] 
+    public string Page2 { get; set; } = "";
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Page3 { get; set; } = "";
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Page4 { get; set; } = "";
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+    }
+
+    private string GetIframeStyle(int iframeNumber)
+    {
+        int count = new[] { Page1, Page2, Page3, Page4 }.Count(p => !string.IsNullOrEmpty(p));
+
+        if (count == 2)
+        {
+            return "width: 50%; height: 100%;";
+        }
+        if (count == 3 && iframeNumber < 3)
+        {
+            return "width: 50%; height: 50%;";
+        }
+        if (count == 3 && iframeNumber == 3)
+        {
+            return "width: 100%; height: 50%;";
+        }
+        if (count == 4)
+        {
+            return "width: 50%; height: 50%;";
+        }
+
+        return "width: 100%; height: 100%;"; // Default for a single iframe
+    }
+}
