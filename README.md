@@ -1,5 +1,8 @@
 # Side by Side Web
 
+### Preview
+![Preview.gif](./Images/preview.gif)
+
 ### Overview
 Side by Side Web is a simple C# Blazor WebAssembly project that displays two multiple iframes on a single page. The URLs to be displayed are passed via query parameters Page1...4.
 
